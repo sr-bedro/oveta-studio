@@ -3,14 +3,20 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>OVETA — Modelado 3D, Renders &amp; Arquitectura</title>
-  <meta name="description" content="Estudio profesional de modelado 3D, renders fotorrealistas y arquitectura en Paraguay. Visualizá tu proyecto antes de construirlo." />
+  <title>OVETA — Modelado 3D & Renders</title>
+  <meta name="description" content="Estudio profesional de modelado 3D y renders fotorrealistas en Paraguay. Visualizá tu proyecto antes de construirlo." />
 
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
 
+  <!-- Pannellum 360° viewer -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css" />
+  <script src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
+
   <style>
+    /* ─── Variables ─── */
     :root {
       --gold: #C9A84C;
       --gold-light: #E2C47A;
@@ -25,6 +31,7 @@
       --font-body: 'DM Sans', sans-serif;
     }
 
+    /* ─── Reset ─── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
     body {
@@ -38,6 +45,7 @@
     img { display: block; width: 100%; object-fit: cover; }
     a { color: inherit; text-decoration: none; }
 
+    /* ─── Noise texture overlay ─── */
     body::before {
       content: '';
       position: fixed;
@@ -49,7 +57,9 @@
       background-size: 200px 200px;
     }
 
+    /* ─── Utility ─── */
     .container { max-width: 1280px; margin: 0 auto; padding: 0 2.5rem; }
+    .gold { color: var(--gold); }
     .tag {
       display: inline-block;
       font-size: 11px;
@@ -62,9 +72,15 @@
       font-family: var(--font-body);
       font-weight: 500;
     }
-    .divider { width: 48px; height: 1px; background: var(--gold); margin: 1.5rem 0; }
+    .divider {
+      width: 48px;
+      height: 1px;
+      background: var(--gold);
+      margin: 1.5rem 0;
+    }
     .divider.centered { margin: 1.5rem auto; }
 
+    /* ─── Botón WhatsApp ─── */
     .btn-wa {
       display: inline-flex;
       align-items: center;
@@ -102,9 +118,13 @@
       transition: background 0.25s, color 0.25s, transform 0.2s;
       cursor: pointer;
     }
-    .btn-outline:hover { background: var(--gold); color: #0D0D0B; transform: translateY(-2px); }
+    .btn-outline:hover {
+      background: var(--gold);
+      color: #0D0D0B;
+      transform: translateY(-2px);
+    }
 
-    /* NAV */
+    /* ─── NAV ─── */
     nav {
       position: fixed;
       top: 0; left: 0; right: 0;
@@ -114,7 +134,11 @@
       transition: background 0.3s;
     }
     nav.scrolled { background: rgba(13,13,11,0.97); border-bottom: 1px solid var(--border); }
-    .nav-inner { display: flex; align-items: center; justify-content: space-between; }
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
     .nav-logo {
       font-family: var(--font-display);
       font-size: 1.6rem;
@@ -122,8 +146,18 @@
       letter-spacing: 0.12em;
       color: var(--text);
     }
-    /* .nav-logo img { height: 36px; width: auto; } */
-    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    /* LOGO IMAGE: descomentá esto si tenés un archivo logo.svg/png en la misma carpeta */
+    /*
+    .nav-logo img {
+      height: 36px;
+      width: auto;
+    }
+    */
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
     .nav-links a {
       font-size: 13px;
       letter-spacing: 0.1em;
@@ -132,19 +166,33 @@
       transition: color 0.2s;
     }
     .nav-links a:hover { color: var(--gold); }
+    .nav-cta { }
     .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
     .hamburger span { display: block; width: 24px; height: 1px; background: var(--text); transition: 0.3s; }
 
-    /* HERO */
-    #hero { position: relative; min-height: 100vh; display: flex; align-items: center; overflow: hidden; }
+    /* ─── HERO ─── */
+    #hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+    }
     .hero-bg {
-      position: absolute; inset: 0;
+      position: absolute;
+      inset: 0;
       background:
         linear-gradient(to right, rgba(13,13,11,0.92) 45%, rgba(13,13,11,0.4)),
+        /* IMAGEN HERO: reemplazá esta URL con tu render estrella */
         url('https://pedrosardi.studio/assets/renders/render-1.webp') center/cover no-repeat;
       z-index: 0;
     }
-    .hero-content { position: relative; z-index: 1; max-width: 700px; padding: 8rem 0 6rem; }
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 700px;
+      padding: 8rem 0 6rem;
+    }
     .hero-content h1 {
       font-family: var(--font-display);
       font-size: clamp(3.5rem, 8vw, 7rem);
@@ -153,23 +201,43 @@
       letter-spacing: 0.04em;
       margin-bottom: 1.5rem;
     }
-    .hero-content h1 em { display: block; font-style: italic; color: var(--gold); }
-    .hero-content p { font-size: 1.05rem; color: rgba(240,237,230,0.75); max-width: 480px; margin-bottom: 2.5rem; line-height: 1.8; }
+    .hero-content h1 em {
+      display: block;
+      font-style: italic;
+      color: var(--gold);
+    }
+    .hero-content p {
+      font-size: 1.05rem;
+      color: rgba(240,237,230,0.75);
+      max-width: 480px;
+      margin-bottom: 2.5rem;
+      line-height: 1.8;
+    }
     .hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; }
     .hero-scroll {
-      position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
-      z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 8px;
-      color: var(--text-muted); font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase;
+      position: absolute;
+      bottom: 2.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-muted);
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
       animation: bounce 2s infinite;
     }
     .hero-scroll svg { opacity: 0.5; }
-    @keyframes bounce {
-      0%,100%{ transform: translateX(-50%) translateY(0); }
-      50%{ transform: translateX(-50%) translateY(6px); }
-    }
+    @keyframes bounce { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(6px)} }
 
-    /* SERVICIOS */
-    #servicios { padding: 8rem 0; background: var(--bg-2); }
+    /* ─── SERVICIOS ─── */
+    #servicios {
+      padding: 8rem 0;
+      background: var(--bg-2);
+    }
     .section-header { margin-bottom: 4rem; }
     .section-header h2 {
       font-family: var(--font-display);
@@ -177,19 +245,22 @@
       font-weight: 300;
       line-height: 1.1;
     }
-    .section-header p { color: var(--text-muted); max-width: 520px; margin-top: 1rem; }
-
+    .section-header p {
+      color: var(--text-muted);
+      max-width: 500px;
+      margin-top: 1rem;
+    }
     .services-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 2px;
     }
-    .services-grid-3 {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 2px;
+    @media (max-width: 1100px) {
+      .services-grid { grid-template-columns: repeat(2, 1fr); }
     }
-
+    @media (max-width: 600px) {
+      .services-grid { grid-template-columns: 1fr; }
+}
     .service-card {
       background: var(--bg-3);
       padding: 2.25rem 2rem;
@@ -199,53 +270,142 @@
       overflow: hidden;
     }
     .service-card::before {
-      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-      background: var(--gold); transform: scaleX(0); transform-origin: left; transition: transform 0.4s ease;
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--gold);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s ease;
     }
     .service-card:hover::before { transform: scaleX(1); }
     .service-card:hover { border-color: rgba(201,168,76,0.25); transform: translateY(-4px); }
     .service-icon {
-      width: 52px; height: 52px;
-      border: 1px solid var(--gold-dim); border-radius: 2px;
-      display: flex; align-items: center; justify-content: center;
-      margin-bottom: 1.75rem; color: var(--gold);
+      width: 52px;
+      height: 52px;
+      border: 1px solid var(--gold-dim);
+      border-radius: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.75rem;
+      color: var(--gold);
     }
     .service-card h3 {
-      font-family: var(--font-display); font-size: 1.35rem; font-weight: 400;
-      margin-bottom: 0.75rem; letter-spacing: 0.02em;
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      font-weight: 400;
+      margin-bottom: 0.75rem;
+      letter-spacing: 0.02em;
     }
-    .service-card p { font-size: 0.85rem; color: var(--text-muted); line-height: 1.8; }
-    .service-list { list-style: none; margin-top: 1.25rem; display: flex; flex-direction: column; gap: 6px; }
-    .service-list li { font-size: 0.8rem; color: var(--text-muted); display: flex; align-items: center; gap: 8px; }
-    .service-list li::before { content: ''; display: inline-block; width: 16px; height: 1px; background: var(--gold); flex-shrink: 0; }
-
-    .services-divider {
-      display: flex; align-items: center; gap: 1.5rem; margin: 4rem 0 3rem;
+    .service-card p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.8;
     }
-    .services-divider-line { flex: 1; height: 1px; background: var(--border); }
+    .service-list {
+      list-style: none;
+      margin-top: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .service-list li {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .service-list li::before {
+      content: '';
+      display: inline-block;
+      width: 16px;
+      height: 1px;
+      background: var(--gold);
+      flex-shrink: 0;
+    }
 
-    /* TECNOLOGÍA */
-    #tecnologia { padding: 5rem 0; background: var(--bg); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-    .tech-inner { display: flex; align-items: center; gap: 3rem; flex-wrap: wrap; }
-    .tech-label { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-muted); white-space: nowrap; flex-shrink: 0; }
+    /* ─── TECNOLOGÍA ─── */
+    #tecnologia {
+      padding: 5rem 0;
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .tech-inner {
+      display: flex;
+      align-items: center;
+      gap: 3rem;
+      flex-wrap: wrap;
+    }
+    .tech-label {
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
     .tech-divider-v { width: 1px; height: 36px; background: var(--border); flex-shrink: 0; }
-    .tech-logos { display: flex; align-items: center; gap: 2.5rem; flex-wrap: wrap; }
-    .tech-item { font-family: var(--font-display); font-size: 1rem; font-weight: 600; letter-spacing: 0.06em; color: var(--text-muted); transition: color 0.25s; white-space: nowrap; }
+    .tech-logos {
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+      flex-wrap: wrap;
+    }
+    .tech-item {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+      transition: color 0.25s;
+      white-space: nowrap;
+    }
     .tech-item:hover { color: var(--gold); }
 
-    /* GALERÍA */
-    #galeria { padding: 8rem 0; background: var(--bg-2); }
-    .gallery-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 4px; margin-top: 3rem; }
-    .g-item { overflow: hidden; position: relative; cursor: pointer; }
-    .g-item img { height: 100%; transition: transform 0.6s ease; }
+    /* ─── GALERÍA ─── */
+    #galeria {
+      padding: 8rem 0;
+      background: var(--bg-2);
+    }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      grid-template-rows: auto;
+      gap: 4px;
+      margin-top: 3rem;
+    }
+    .g-item {
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+    }
+    .g-item img {
+      height: 100%;
+      transition: transform 0.6s ease;
+    }
     .g-item:hover img { transform: scale(1.04); }
     .g-item .g-overlay {
-      position: absolute; inset: 0;
+      position: absolute;
+      inset: 0;
       background: linear-gradient(to top, rgba(13,13,11,0.7) 0%, transparent 60%);
-      opacity: 0; transition: opacity 0.3s; display: flex; align-items: flex-end; padding: 1.25rem;
+      opacity: 0;
+      transition: opacity 0.3s;
+      display: flex;
+      align-items: flex-end;
+      padding: 1.25rem;
     }
     .g-item:hover .g-overlay { opacity: 1; }
-    .g-overlay span { font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); }
+    .g-overlay span {
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+    /* Layout asimétrico */
     .g-item:nth-child(1) { grid-column: span 7; grid-row: span 2; min-height: 420px; }
     .g-item:nth-child(2) { grid-column: span 5; min-height: 200px; }
     .g-item:nth-child(3) { grid-column: span 5; min-height: 200px; }
@@ -253,97 +413,270 @@
     .g-item:nth-child(5) { grid-column: span 4; min-height: 240px; }
     .g-item:nth-child(6) { grid-column: span 4; min-height: 240px; }
 
-    /* RECORRIDO */
-    #recorrido { padding: 8rem 0; background: var(--bg-3); }
-    .recorrido-layout { display: grid; grid-template-columns: 1.8fr 1fr; gap: 5rem; align-items: center; }
-    .video-wrapper { position: relative; border-radius: 2px; overflow: hidden; border: 1px solid var(--border); background: #000; }
-    .video-wrapper video { width: 100%; display: block; aspect-ratio: 16/9; object-fit: cover; }
+    /* ─── RECORRIDO VIRTUAL ─── */
+    #recorrido {
+      padding: 8rem 0;
+      background: var(--bg-3);
+    }
+    .recorrido-layout {
+      display: grid;
+      grid-template-columns: 1.8fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+    .video-wrapper {
+      position: relative;
+      border-radius: 2px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: #000;
+    }
+    .video-wrapper video {
+      width: 100%;
+      display: block;
+      aspect-ratio: 16/9;
+      object-fit: cover;
+    }
+    /* overlay que desaparece al darle play */
     .video-play-overlay {
-      position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
-      background: rgba(13,13,11,0.45); cursor: pointer; transition: opacity 0.4s;
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(13,13,11,0.45);
+      cursor: pointer;
+      transition: opacity 0.4s;
     }
     .video-play-overlay.hidden { opacity: 0; pointer-events: none; }
     .play-btn-circle {
-      width: 72px; height: 72px; border-radius: 50%; border: 1.5px solid var(--gold);
-      display: flex; align-items: center; justify-content: center;
-      transition: background 0.25s, transform 0.25s; color: var(--gold);
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      border: 1.5px solid var(--gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.25s, transform 0.25s;
+      color: var(--gold);
     }
-    .video-play-overlay:hover .play-btn-circle { background: var(--gold); color: #0D0D0B; transform: scale(1.08); }
-    .video-controls { position: absolute; bottom: 1rem; right: 1rem; display: flex; gap: 8px; z-index: 10; }
+    .video-play-overlay:hover .play-btn-circle {
+      background: var(--gold);
+      color: #0D0D0B;
+      transform: scale(1.08);
+    }
+    /* controles inferiores */
+    .video-controls {
+      position: absolute;
+      bottom: 1rem;
+      right: 1rem;
+      display: flex;
+      gap: 8px;
+      z-index: 10;
+    }
     .vid-ctrl-btn {
-      background: rgba(13,13,11,0.75); border: 1px solid var(--border); color: var(--text-muted);
-      width: 36px; height: 36px; border-radius: 2px;
-      display: flex; align-items: center; justify-content: center; cursor: pointer;
+      background: rgba(13,13,11,0.75);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      width: 36px;
+      height: 36px;
+      border-radius: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
       transition: color 0.2s, border-color 0.2s;
     }
     .vid-ctrl-btn:hover { color: var(--gold); border-color: var(--gold-dim); }
-    .video-bar { position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: rgba(255,255,255,0.1); }
-    .video-bar-fill { height: 100%; background: var(--gold); width: 0%; transition: width 0.25s linear; }
-    .recorrido-text h2 { font-family: var(--font-display); font-size: clamp(2rem, 4vw, 3rem); font-weight: 300; line-height: 1.15; margin-bottom: 1rem; }
-    .recorrido-text p { color: var(--text-muted); font-size: 0.9rem; line-height: 1.85; margin-bottom: 1rem; }
-
-    /* 360° */
-    #panorama { padding: 8rem 0; background: var(--bg); }
-    .panorama-layout { display: grid; grid-template-columns: 1fr 1.8fr; gap: 4rem; align-items: center; }
-    .panorama-text h2 { font-family: var(--font-display); font-size: clamp(2rem, 4vw, 3rem); font-weight: 300; line-height: 1.15; margin-bottom: 1rem; }
-    .panorama-text p { color: var(--text-muted); font-size: 0.9rem; line-height: 1.85; }
-    .panorama-viewer { position: relative; border-radius: 2px; overflow: hidden; border: 1px solid var(--border); }
-    .panorama-viewer iframe { display: block; width: 100%; height: 480px; }
-    .pano-label {
-      position: absolute; bottom: 1rem; left: 1rem; z-index: 10;
-      background: rgba(13,13,11,0.85); padding: 6px 14px; border-radius: 2px;
-      border: 1px solid var(--gold-dim); pointer-events: none;
+    .video-bar {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 2px;
+      background: rgba(255,255,255,0.1);
     }
-    .pano-label span { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); }
-
-    /* CTA */
-    #cta { padding: 8rem 0; background: var(--bg-3); text-align: center; position: relative; overflow: hidden; }
-    #cta::before {
-      content: 'OVETA'; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-      font-family: var(--font-display); font-size: clamp(8rem, 20vw, 18rem); font-weight: 600;
-      letter-spacing: 0.05em; color: transparent; -webkit-text-stroke: 1px rgba(201,168,76,0.06);
-      pointer-events: none; white-space: nowrap; z-index: 0;
+    .video-bar-fill {
+      height: 100%;
+      background: var(--gold);
+      width: 0%;
+      transition: width 0.25s linear;
     }
-    .cta-content { position: relative; z-index: 1; }
-    .cta-content h2 { font-family: var(--font-display); font-size: clamp(2.5rem, 6vw, 5rem); font-weight: 300; line-height: 1.1; margin-bottom: 1.5rem; }
-    .cta-content h2 em { font-style: italic; color: var(--gold); }
-    .cta-content p { color: var(--text-muted); max-width: 460px; margin: 0 auto 2.5rem; font-size: 0.95rem; }
-    .cta-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
-
-    /* FOOTER */
-    footer { padding: 3rem 0; border-top: 1px solid var(--border); background: var(--bg); }
-    .footer-inner { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem; }
-    .footer-brand { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; letter-spacing: 0.12em; }
-    .footer-info { font-size: 12px; color: var(--text-muted); letter-spacing: 0.08em; }
-    .footer-links { display: flex; gap: 1.5rem; list-style: none; }
-    .footer-links a { font-size: 12px; color: var(--text-muted); letter-spacing: 0.08em; text-transform: uppercase; transition: color 0.2s; }
-    .footer-links a:hover { color: var(--gold); }
-
-    /* Animaciones */
-    .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease; }
-    .reveal.visible { opacity: 1; transform: translateY(0); }
-
-    /* RESPONSIVE */
-    @media (max-width: 1100px) {
-      .services-grid { grid-template-columns: repeat(2, 1fr); }
-      .services-grid-3 { grid-template-columns: repeat(2, 1fr); }
+    .recorrido-text h2 {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 300;
+      line-height: 1.15;
+      margin-bottom: 1rem;
+    }
+    .recorrido-text p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      line-height: 1.85;
+      margin-bottom: 1rem;
     }
     @media (max-width: 900px) {
-      .panorama-layout { grid-template-columns: 1fr; }
-      .panorama-viewer iframe { height: 340px; }
       .recorrido-layout { grid-template-columns: 1fr; }
       .recorrido-layout .recorrido-text { order: 2; }
       .recorrido-layout .video-wrapper { order: 1; }
+    }
+
+    /* ─── VISTA 360° ─── */
+    #panorama {
+      padding: 8rem 0;
+      background: var(--bg);
+    }
+    .panorama-layout {
+      display: grid;
+      grid-template-columns: 1fr 1.8fr;
+      gap: 4rem;
+      align-items: center;
+    }
+    .panorama-text h2 {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 300;
+      line-height: 1.15;
+      margin-bottom: 1rem;
+    }
+    .panorama-text p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      line-height: 1.85;
+    }
+    .panorama-viewer {
+      position: relative;
+      border-radius: 2px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    #pano-container {
+      width: 100%;
+      height: 420px;
+    }
+    .pano-label {
+      position: absolute;
+      bottom: 1rem;
+      left: 1rem;
+      z-index: 10;
+      background: rgba(13,13,11,0.85);
+      padding: 6px 14px;
+      border-radius: 2px;
+      border: 1px solid var(--gold-dim);
+    }
+    .pano-label span {
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    /* ─── CTA FINAL ─── */
+    #cta {
+      padding: 8rem 0;
+      background: var(--bg-3);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    #cta::before {
+      content: 'OVETA';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: var(--font-display);
+      font-size: clamp(8rem, 20vw, 18rem);
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(201,168,76,0.06);
+      pointer-events: none;
+      white-space: nowrap;
+      z-index: 0;
+    }
+    .cta-content { position: relative; z-index: 1; }
+    .cta-content h2 {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      font-weight: 300;
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+    }
+    .cta-content h2 em {
+      font-style: italic;
+      color: var(--gold);
+    }
+    .cta-content p {
+      color: var(--text-muted);
+      max-width: 460px;
+      margin: 0 auto 2.5rem;
+      font-size: 0.95rem;
+    }
+    .cta-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+    /* ─── FOOTER ─── */
+    footer {
+      padding: 3rem 0;
+      border-top: 1px solid var(--border);
+      background: var(--bg);
+    }
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+    .footer-brand {
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+    }
+    .footer-info {
+      font-size: 12px;
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+    }
+    .footer-links {
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+    }
+    .footer-links a {
+      font-size: 12px;
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--gold); }
+
+    /* ─── Animaciones entrada ─── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 900px) {
+      .panorama-layout { grid-template-columns: 1fr; }
+      #pano-container { height: 320px; }
       .g-item:nth-child(1) { grid-column: span 12; min-height: 320px; }
-      .g-item:nth-child(2), .g-item:nth-child(3) { grid-column: span 6; }
-      .g-item:nth-child(4), .g-item:nth-child(5), .g-item:nth-child(6) { grid-column: span 4; }
+      .g-item:nth-child(2),
+      .g-item:nth-child(3) { grid-column: span 6; }
+      .g-item:nth-child(4),
+      .g-item:nth-child(5),
+      .g-item:nth-child(6) { grid-column: span 4; }
     }
     @media (max-width: 700px) {
       .nav-links, .nav-cta { display: none; }
       .hamburger { display: flex; }
       .hero-content { padding-top: 7rem; }
-      .services-grid { grid-template-columns: 1fr; }
-      .services-grid-3 { grid-template-columns: 1fr; }
       .gallery-grid { grid-template-columns: 1fr 1fr; }
       .g-item:nth-child(n) { grid-column: span 1; min-height: 200px; }
       .g-item:nth-child(1) { grid-column: span 2; min-height: 280px; }
@@ -353,12 +686,14 @@
     }
   </style>
 </head>
+
 <body>
 
-  <!-- NAV -->
+  <!-- ─── NAVEGACIÓN ─── -->
   <nav id="navbar">
     <div class="container nav-inner">
       <a href="#hero" class="nav-logo">
+        <!-- LOGO: Si tenés un archivo logo.png/svg, reemplazá la línea de abajo -->
         <!-- <img src="logo.svg" alt="OVETA" /> -->
         OVETA
       </a>
@@ -369,24 +704,30 @@
         <li><a href="#panorama">Vista 360°</a></li>
         <li><a href="#cta">Contacto</a></li>
       </ul>
-      <a class="btn-wa nav-cta" href="https://wa.me/595974534159?text=Hola%20OVETA%2C%20me%20interesa%20cotizar%20un%20proyecto" target="_blank" rel="noopener">
+      <a class="btn-wa nav-cta" href="https://wa.me/595974534159?text=Hola%20OVETA%2C%20me%20interesa%20cotizar%20un%20proyecto%20de%20modelado%203D%20y%20renders" target="_blank" rel="noopener">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
         Cotizá ahora
       </a>
-      <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+      <div class="hamburger" id="hamburger">
+        <span></span><span></span><span></span>
+      </div>
     </div>
   </nav>
 
-  <!-- HERO -->
+  <!-- ─── HERO ─── -->
   <section id="hero">
     <div class="hero-bg"></div>
     <div class="container">
       <div class="hero-content reveal">
-        <span class="tag">Visualización 3D &amp; Arquitectura · Paraguay</span>
-        <h1>Visualizá tu<br />proyecto <em>antes de construir.</em></h1>
-        <p>Transformamos planos e ideas en imágenes fotorrealistas, recorridos virtuales y proyectos ejecutivos que convencen y aceleran decisiones.</p>
+        <span class="tag">Modelado 3D &amp; Renders · Paraguay</span>
+        <h1>
+          Visualizá tu<br />
+          proyecto
+          <em>antes de construir.</em>
+        </h1>
+        <p>Transformamos planos e ideas en imágenes fotorrealistas que convencen, emocionan y aceleran decisiones.</p>
         <div class="hero-ctas">
-          <a class="btn-wa" href="https://wa.me/595974534159?text=Hola%20OVETA%2C%20me%20interesa%20cotizar%20un%20proyecto" target="_blank" rel="noopener">
+          <a class="btn-wa" href="https://wa.me/595974534159?text=Hola%20OVETA%2C%20me%20interesa%20cotizar%20un%20proyecto%20de%20modelado%203D%20y%20renders" target="_blank" rel="noopener">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
             Solicitar cotización
           </a>
@@ -400,122 +741,80 @@
     </div>
   </section>
 
-  <!-- SERVICIOS -->
+  <!-- ─── SERVICIOS ─── -->
   <section id="servicios">
     <div class="container">
       <div class="section-header reveal">
         <span class="tag">Nuestros servicios</span>
         <div class="divider"></div>
-        <h2>Todo lo que tu proyecto<br /><em style="font-family:var(--font-display);font-style:italic;color:var(--gold);">necesita, en un solo lugar</em></h2>
-        <p>Desde la visualización 3D hasta la entrega de obra. Diseño, renders y arquitectura ejecutiva bajo la misma marca.</p>
+        <h2>Lo que hacemos<br /><em style="font-family:var(--font-display);font-style:italic;color:var(--gold);">por tu proyecto</em></h2>
+        <p>Cada imagen que entregamos es el resultado de un proceso técnico y artístico riguroso, con las herramientas más avanzadas del sector.</p>
       </div>
 
-      <!-- Bloque 1: Visualización 3D -->
-      <div class="services-grid">
-        <div class="service-card reveal">
-          <div class="service-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
-          </div>
-          <h3>Modelado 3D</h3>
-          <p>Construimos tu proyecto en 3D a partir de planos, croquis y referencias. Base de todo el proceso visual.</p>
-          <ul class="service-list">
-            <li>Residenciales y comerciales</li>
-            <li>Interiores y exteriores</li>
-          </ul>
-        </div>
+<div class="services-grid">
 
-        <div class="service-card reveal">
-          <div class="service-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-          </div>
-          <h3>Renders Fotorrealistas</h3>
-          <p>Imágenes de alta calidad con iluminación, materiales y entorno que se confunden con fotografías reales.</p>
-          <ul class="service-list">
-            <li>Exteriores e interiores</li>
-            <li>Iluminación natural y artificial</li>
-            <li>Alta resolución para impresión</li>
-          </ul>
-        </div>
+  <!-- Modelado 3D -->
+  <div class="service-card reveal">
+    <div class="service-icon">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+    </div>
+    <h3>Modelado 3D</h3>
+    <p>Construimos tu proyecto en 3D a partir de planos, croquis y referencias. Base de todo el proceso visual.</p>
+    <ul class="service-list">
+      <li>Residenciales y Comerciales</li>
+      <li>Interiores y exteriores</li>
+    </ul>
+  </div>
 
-        <div class="service-card reveal">
-          <div class="service-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 10l4.553-2.07A1 1 0 0 1 21 8.83v6.34a1 1 0 0 1-1.447.9L15 14"/><rect x="2" y="7" width="13" height="10" rx="2"/></svg>
-          </div>
-          <h3>Recorrido Virtual</h3>
-          <p>Animación cinematográfica que simula una cámara recorriendo el proyecto como si ya estuviera construido.</p>
-          <ul class="service-list">
-            <li>Video fluido en 4K</li>
-            <li>Ideal para inversores y clientes</li>
-            <li>Entrega en MP4 listo para usar</li>
-          </ul>
-        </div>
+  <!-- Renders Fotorrealistas -->
+  <div class="service-card reveal">
+    <div class="service-icon">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+    </div>
+    <h3>Renders Fotorrealistas</h3>
+    <p>Imágenes de alta calidad con iluminación, materiales y entorno que se confunden con fotografías reales.</p>
+    <ul class="service-list">
+      <li>Renders exteriores e interiores</li>
+      <li>Iluminación natural y artificial</li>
+      <li>Materiales y texturas premium</li>
+      <li>Alta resolución para impresión</li>
+    </ul>
+  </div>
 
-        <div class="service-card reveal">
-          <div class="service-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><ellipse cx="12" cy="12" rx="10" ry="4"/><line x1="12" y1="2" x2="12" y2="22"/></svg>
-          </div>
-          <h3>Vista Panorámica 360°</h3>
-          <p>Experiencia inmersiva que permite explorar el espacio en todas las direcciones desde cualquier dispositivo.</p>
-          <ul class="service-list">
-            <li>Navegación interactiva</li>
-            <li>Compatible con VR y móviles</li>
-            <li>Link compartible al instante</li>
-          </ul>
-        </div>
-      </div>
+  <!-- Recorrido Virtual -->
+  <div class="service-card reveal">
+    <div class="service-icon">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 10l4.553-2.07A1 1 0 0 1 21 8.83v6.34a1 1 0 0 1-1.447.9L15 14"/><rect x="2" y="7" width="13" height="10" rx="2"/></svg>
+    </div>
+    <h3>Recorrido Virtual</h3>
+    <p>Animación cinematográfica que simula una cámara recorriendo el proyecto como si ya estuviera construido.</p>
+    <ul class="service-list">
+      <li>Video fluido y 4k</li>
+      <li>Ideal para inversores y clientes</li>
+      <li>Entrega en formato MP4 listo para usar</li>
+    </ul>
+  </div>
 
-      <!-- Separador -->
-      <div class="services-divider reveal">
-        <div class="services-divider-line"></div>
-        <span class="tag">Arquitectura &amp; Construcción</span>
-        <div class="services-divider-line"></div>
-      </div>
+  <!-- Vista 360° -->
+  <div class="service-card reveal">
+    <div class="service-icon">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><ellipse cx="12" cy="12" rx="10" ry="4"/><line x1="12" y1="2" x2="12" y2="22"/></svg>
+    </div>
+    <h3>Vista Panorámica 360°</h3>
+    <p>Experiencia inmersiva que permite explorar el espacio en todas las direcciones desde cualquier dispositivo.</p>
+    <ul class="service-list">
+      <li>Navegación interactiva</li>
+      <li>Compatible con VR y móviles</li>
+      <li>Ideal para clientes remotos</li>
+      <li>Link compartible al instante</li>
+    </ul>
+  </div>
 
-      <!-- Bloque 2: Arquitectura -->
-      <div class="services-grid-3">
-        <div class="service-card reveal">
-          <div class="service-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-          </div>
-          <h3>Diseño Arquitectónico</h3>
-          <p>Anteproyecto y proyecto ejecutivo para obras nuevas, reformas y ampliaciones con criterio técnico y estético.</p>
-          <ul class="service-list">
-            <li>Residencial, comercial e industrial</li>
-            <li>Obras nuevas, reformas y ampliaciones</li>
-            <li>Anteproyecto y proyecto ejecutivo</li>
-          </ul>
-        </div>
-
-        <div class="service-card reveal">
-          <div class="service-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-          </div>
-          <h3>Documentación Técnica</h3>
-          <p>Toda la documentación necesaria para ejecutar la obra y gestionar permisos ante organismos municipales.</p>
-          <ul class="service-list">
-            <li>Planos ejecutivos en CAD</li>
-            <li>Memorias descriptivas</li>
-            <li>Cómputo métrico y legajos municipales</li>
-          </ul>
-        </div>
-
-        <div class="service-card reveal">
-          <div class="service-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-          </div>
-          <h3>Dirección y Supervisión de Obra</h3>
-          <p>Acompañamiento profesional desde el inicio hasta la entrega: control de avance, materiales y coordinación de gremios.</p>
-          <ul class="service-list">
-            <li>Control de avance y cronograma</li>
-            <li>Verificación de materiales</li>
-            <li>Coordinación de gremios</li>
-          </ul>
-        </div>
-      </div>
+</div>
     </div>
   </section>
 
-  <!-- TECNOLOGÍA -->
+  <!-- ─── TECNOLOGÍA ─── -->
   <section id="tecnologia">
     <div class="container">
       <div class="tech-inner reveal">
@@ -532,7 +831,7 @@
     </div>
   </section>
 
-  <!-- GALERÍA -->
+  <!-- ─── GALERÍA ─── -->
   <section id="galeria">
     <div class="container">
       <div class="section-header reveal">
@@ -540,27 +839,34 @@
         <div class="divider"></div>
         <h2>Proyectos que<br /><em style="font-family:var(--font-display);font-style:italic;color:var(--gold);">hablan por sí solos</em></h2>
       </div>
+
       <div class="gallery-grid">
+        <!-- IMAGEN 1: render principal / fachada -->
         <div class="g-item">
           <img src="assets/fotos/render-2.webp" alt="Fachada edificio — render exterior" />
           <div class="g-overlay"><span>Exterior · Render</span></div>
         </div>
+        <!-- IMAGEN 2 -->
         <div class="g-item">
           <img src="assets/fotos/render-7.webp" alt="Interior — living moderno" />
           <div class="g-overlay"><span>Interior · Render</span></div>
         </div>
+        <!-- IMAGEN 3 -->
         <div class="g-item">
           <img src="assets/fotos/Escena 2.webp" alt="Interior — cocina" />
           <div class="g-overlay"><span>Interior · Cocina</span></div>
         </div>
+        <!-- IMAGEN 4 -->
         <div class="g-item">
           <img src="assets/fotos/render-1.webp" alt="Interior" />
           <div class="g-overlay"><span>Interior</span></div>
         </div>
+        <!-- IMAGEN 5 -->
         <div class="g-item">
           <img src="assets/fotos/render-4.webp" alt="Exterior — fachada" />
           <div class="g-overlay"><span>Exterior · Fachada</span></div>
         </div>
+        <!-- IMAGEN 6 -->
         <div class="g-item">
           <img src="assets/fotos/render-6.webp" alt="Interior — sala" />
           <div class="g-overlay"><span>Interior · Sala</span></div>
@@ -569,17 +875,35 @@
     </div>
   </section>
 
-  <!-- RECORRIDO VIRTUAL -->
+  <!-- ─── RECORRIDO VIRTUAL ─── -->
   <section id="recorrido">
     <div class="container">
       <div class="recorrido-layout">
+
         <div class="video-wrapper reveal">
-          <video id="tour-video" src="assets/video-obra.mp4" muted loop playsinline preload="metadata"></video>
+          <!--
+            REEMPLAZÁ src con la ruta a tu video.
+            Formatos recomendados: MP4 (H.264) para máxima compatibilidad.
+            Ejemplo local:  src="recorrido.mp4"
+            Ejemplo online: src="https://tudominio.com/recorrido.mp4"
+          -->
+          <video
+            id="tour-video"
+            src="assets/video-obra.mp4"
+            muted
+            loop
+            playsinline
+            preload="metadata"
+          ></video>
+
+          <!-- Overlay de play inicial -->
           <div class="video-play-overlay" id="play-overlay">
             <div class="play-btn-circle">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21"/></svg>
             </div>
           </div>
+
+          <!-- Controles -->
           <div class="video-controls">
             <button class="vid-ctrl-btn" id="btn-mute" title="Activar / silenciar sonido" aria-label="Silenciar">
               <svg id="icon-muted" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
@@ -589,36 +913,39 @@
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
             </button>
           </div>
+
+          <!-- Barra de progreso -->
           <div class="video-bar"><div class="video-bar-fill" id="video-progress"></div></div>
         </div>
 
         <div class="recorrido-text reveal">
           <span class="tag">Recorrido virtual</span>
           <div class="divider"></div>
-          <h2>Caminá por el espacio <em style="font-style:italic;color:var(--gold);">antes de que exista</em></h2>
+          <h2>Caminá por el<br />espacio <em style="font-style:italic;color:var(--gold);">antes de que exista</em></h2>
           <p>Animaciones de recorrido que simulan una cámara moviéndose dentro del proyecto, como si ya estuviera construido.</p>
           <p>Perfectas para presentaciones a inversores, clientes finales o aprobaciones municipales donde la imagen estática no alcanza.</p>
           <div style="margin-top:2rem;">
-            <a class="btn-wa" href="https://wa.me/595974534159?text=Hola%20OVETA%2C%20me%20interesa%20un%20recorrido%20virtual%20para%20mi%20proyecto" target="_blank" rel="noopener">
+            <a class="btn-wa" href="https://wa.me/595974534159?text=Hola%20OVETA%2C%20me%20interesa%20un%20recorrido%20virtual%20animado%20para%20mi%20proyecto" target="_blank" rel="noopener">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
               Cotizar recorrido
             </a>
           </div>
         </div>
+
       </div>
     </div>
   </section>
 
-  <!-- VISTA 360° -->
+  <!-- ─── VISTA 360° ─── -->
   <section id="panorama">
     <div class="container">
       <div class="panorama-layout">
         <div class="panorama-text reveal">
           <span class="tag">Experiencia inmersiva</span>
           <div class="divider"></div>
-          <h2>Recorrido panorámico <em style="font-style:italic;color:var(--gold);">360°</em></h2>
+          <h2>Recorrido<br />panorámico <em style="font-style:italic;color:var(--gold);">360°</em></h2>
           <p style="margin-bottom:1.5rem;">Explorá el espacio como si ya estuvieras adentro. Arrastrá la imagen para girar en todas las direcciones.</p>
-          <p>Ideal para presentaciones a clientes remotos, o para validar decisiones de diseño antes de construir.</p>
+          <p>Ideal para presentaciones a clientes que no pueden estar presentes, o para validar decisiones de diseño antes de construir.</p>
           <div style="margin-top:2rem;">
             <a class="btn-wa" href="https://wa.me/595974534159?text=Hola%20OVETA%2C%20quiero%20saber%20m%C3%A1s%20sobre%20las%20vistas%20panor%C3%A1micas%20360%C2%B0" target="_blank" rel="noopener">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
@@ -628,19 +955,14 @@
         </div>
 
         <div class="panorama-viewer reveal">
-          <iframe
-            width="100%" height="480" frameborder="0"
-            allow="xr-spatial-tracking; gyroscope; accelerometer"
-            allowfullscreen scrolling="no"
-            src="https://kuula.co/share/h84Pc?logo=1&info=1&fs=1&vr=0&sd=1&thumbs=1"
-          ></iframe>
+          <iframe width="100%" height="640" frameborder="0" allow="xr-spatial-tracking; gyroscope; accelerometer" allowfullscreen scrolling="no" src="https://kuula.co/share/h84Pc?logo=1&info=1&fs=1&vr=0&sd=1&thumbs=1"></iframe>
           <div class="pano-label"><span>⟳ &nbsp;Arrastrá para explorar</span></div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- CTA FINAL -->
+  <!-- ─── CTA FINAL ─── -->
   <section id="cta">
     <div class="container">
       <div class="cta-content reveal">
@@ -649,7 +971,7 @@
         <h2>Tu proyecto merece<br />ser visto <em>antes</em><br />de existir.</h2>
         <p>Contanos tu idea. Respondemos en menos de 24 hs con una cotización personalizada sin compromiso.</p>
         <div class="cta-btns">
-          <a class="btn-wa" href="https://wa.me/595974534159?text=Hola%20OVETA%2C%20me%20interesa%20cotizar%20un%20proyecto" target="_blank" rel="noopener">
+          <a class="btn-wa" href="https://wa.me/595974534159?text=Hola%20OVETA%2C%20me%20interesa%20cotizar%20un%20proyecto%20de%20modelado%203D%20y%20renders" target="_blank" rel="noopener">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
             Solicitar cotización gratis
           </a>
@@ -659,7 +981,7 @@
     </div>
   </section>
 
-  <!-- FOOTER -->
+  <!-- ─── FOOTER ─── -->
   <footer>
     <div class="container footer-inner">
       <div class="footer-brand">OVETA</div>
@@ -672,12 +994,15 @@
     </div>
   </footer>
 
+  <!-- ─── SCRIPTS ─── -->
   <script>
+    /* Nav scroll effect */
     const navbar = document.getElementById('navbar');
     window.addEventListener('scroll', () => {
       navbar.classList.toggle('scrolled', window.scrollY > 60);
     });
 
+    /* Reveal on scroll */
     const revealEls = document.querySelectorAll('.reveal');
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((e, i) => {
@@ -689,26 +1014,61 @@
     }, { threshold: 0.12 });
     revealEls.forEach(el => observer.observe(el));
 
-    const video     = document.getElementById('tour-video');
-    const overlay   = document.getElementById('play-overlay');
-    const btnMute   = document.getElementById('btn-mute');
+    /* ─── Video recorrido virtual ─── */
+    const video = document.getElementById('tour-video');
+    const overlay = document.getElementById('play-overlay');
+    const btnMute = document.getElementById('btn-mute');
     const iconMuted = document.getElementById('icon-muted');
     const iconSound = document.getElementById('icon-sound');
-    const btnFS     = document.getElementById('btn-fullscreen');
-    const progress  = document.getElementById('video-progress');
+    const btnFS = document.getElementById('btn-fullscreen');
+    const progress = document.getElementById('video-progress');
 
-    overlay.addEventListener('click', () => { video.play(); overlay.classList.add('hidden'); });
+    overlay.addEventListener('click', () => {
+      video.play();
+      overlay.classList.add('hidden');
+    });
+
     btnMute.addEventListener('click', () => {
       video.muted = !video.muted;
       iconMuted.style.display = video.muted ? 'block' : 'none';
       iconSound.style.display  = video.muted ? 'none'  : 'block';
     });
+
     btnFS.addEventListener('click', () => {
       if (video.requestFullscreen) video.requestFullscreen();
       else if (video.webkitRequestFullscreen) video.webkitRequestFullscreen();
     });
+
     video.addEventListener('timeupdate', () => {
-      if (video.duration) progress.style.width = (video.currentTime / video.duration * 100) + '%';
+      if (video.duration) {
+        progress.style.width = (video.currentTime / video.duration * 100) + '%';
+      }
+    });
+
+
+    /* REEMPLAZÁ la URL de panorama por tu imagen equirectangular real */
+    pannellum.viewer('pano-container', {
+      type: 'equirectangular',
+      panorama: 'https://kuula.co/share/h84Pc?logo=1&info=1&fs=1&vr=0&sd=1&thumbs=1', /* ← reemplazá con tu imagen 360° */
+      autoLoad: true,
+      autoRotate: -2,
+      compass: false,
+      showFullscreenCtrl: true,
+      showZoomCtrl: false,
+      mouseZoom: false,
+      hfov: 100,
+      strings: {
+        loadButtonLabel: 'Cargar vista 360°',
+        loadingLabel: 'Cargando...',
+        bylineLabel: '',
+        noPanoramaError: 'No se encontró imagen panorámica.',
+        fileAccessError: 'No se pudo acceder al archivo: %s',
+        malformedURLError: 'URL incorrecta.',
+        iOS8WebGLError: 'Tu navegador no soporta WebGL.',
+        genericWebGLError: 'Tu navegador no soporta WebGL.',
+        textureSizeError: 'Imagen demasiado grande (%s &gt; %s). Reduce el tamaño.',
+        unknownError: 'Error desconocido.'
+      }
     });
   </script>
 
